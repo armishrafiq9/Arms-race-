@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090b">
+<title>ARMS RACE — Racing Games</title>
+<style>
+:root{--bg:#08090b;--panel:#111317;--line:#292d34;--muted:#9ba2ad;--white:#f4f5f7;--red:#e12b36}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+header{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 7%;border-bottom:1px solid #202329;background:#090a0c;position:sticky;top:0;z-index:2}
+.logo{font-size:22px;font-weight:900;letter-spacing:3px}.logo span{color:var(--red)}
+nav a{color:#c6cad1;text-decoration:none;margin-left:25px;font-size:13px}nav a:hover{color:white}
+.hero{min-height:390px;padding:78px 7%;display:flex;align-items:center;background:linear-gradient(90deg,rgba(8,9,11,.98),rgba(8,9,11,.74),rgba(8,9,11,.25)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85') center/cover}
+.kicker{color:var(--red);font-size:12px;font-weight:bold;letter-spacing:3px}.hero h1{font-size:clamp(42px,7vw,76px);line-height:.98;margin:16px 0;letter-spacing:-3px}.hero p{max-width:490px;color:#c1c5cc;line-height:1.6}.btn{display:inline-block;margin-top:16px;background:var(--red);color:white;border:0;border-radius:3px;padding:14px 22px;font-weight:bold;letter-spacing:1px;text-decoration:none;cursor:pointer}
+main{padding:38px 7% 70px}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:18px}.section-head h2{font-size:22px;margin:0}.section-head span{font-size:12px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:7px;overflow:hidden}.card img{width:100%;height:145px;object-fit:cover;display:block;filter:saturate(.8)}.card-body{padding:16px}.card h3{margin:0 0 7px;font-size:16px}.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.tag{display:inline-block;color:#ff747b;font-size:10px;letter-spacing:1px;margin-bottom:9px}
+.game-wrap{margin-top:42px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px}.game-wrap h2{margin:0 0 8px}.game-wrap p{color:var(--muted);font-size:13px}.game-area{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:18px;align-items:start}canvas{width:100%;max-width:560px;aspect-ratio:7/5;background:#252a2d;border:1px solid #454b52;border-radius:5px;display:block}.controls{font-size:13px;color:#c2c7cf;line-height:1.7}.controls strong{color:white}.controls button{width:100%;padding:11px;margin-top:8px;background:#252a31;border:1px solid #414751;color:white;border-radius:4px;cursor:pointer}.score{font-size:24px;font-weight:bold;color:#fff;margin:8px 0}
+footer{border-top:1px solid #202329;padding:24px 7%;color:#7f8792;font-size:12px;display:flex;justify-content:space-between}
+@media(max-width:700px){header{padding:0 5%}nav a{margin-left:10px;font-size:11px}.hero{padding:65px 5%}main{padding:30px 5%}.game-area{grid-template-columns:1fr}.controls{max-width:560px}.section-head span{display:none}}
+</style>
+</head>
+<body>
+<header><div class="logo">ARMS <span>RACE</span></div><nav><a href="#games">GAMES</a><a href="#play">PLAY NOW</a></nav></header>
+<section class="hero"><div><div class="kicker">THE HOME OF ONLINE RACING</div><h1>BUILT FOR<br>THE NEED FOR SPEED.</h1><p>Choose your race, hit the track, and chase your best time. Welcome to ARMS RACE.</p><a class="btn" href="#play">START RACING&nbsp; ↗</a></div></section>
+<main>
+<section id="games"><div class="section-head"><h2>FEATURED RACING</h2><span>YOUR NEXT RACE STARTS HERE</span></div>
+<div class="cards">
+<article class="card"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80" alt="Sports car"><div class="card-body"><span class="tag">COMING SOON</span><h3>Street Sprint</h3><p>Race through the city and chase the finish line.</p></div></article>
+<article class="card"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Racing car" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'"><div class="card-body"><span class="tag">COMING SOON</span><h3>Track Legends</h3><p>Take on sharp turns and beat your lap record.</p></div></article>
+<article class="card"><img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80" alt="Performance car"><div class="card-body"><span class="tag">PLAYABLE DEMO BELOW</span><h3>Traffic Racer</h3><p>Dodge the traffic and see how long you can last.</p></div></article>
+</div></section>
+<section class="game-wrap" id="play"><h2>TRAFFIC RACER — MINI DEMO</h2><p>Use ← and → or A and D to move. Avoid the other cars and build your score.</p>
+<div class="game-area"><canvas id="game" width="560" height="400" aria-label="Traffic racing mini game"></canvas><aside class="controls"><div>YOUR SCORE</div><div class="score" id="score">0</div><div id="status">Press Start Race to begin.</div><button id="start">START RACE</button><button id="left">← LEFT</button><button id="right">RIGHT →</button><p><strong>Keyboard:</strong><br>← / → or A / D<br><strong>Mobile:</strong><br>Use the direction buttons.</p></aside></div></section>
+</main>
+<footer><span>© 2026 ARMS RACE</span><span>RACE YOUR WAY.</span></footer>
+<script>
+const c=document.getElementById('game'),ctx=c.getContext('2d'),scoreEl=document.getElementById('score'),statusEl=document.getElementById('status');
+let player=2,traffic=[],score=0,running=false,frame=0,raf=0,keys={};
+function drawCar(x,y,color){ctx.fillStyle=color;ctx.fillRect(x+7,y,26,48);ctx.fillStyle='#b8d7e8';ctx.fillRect(x+11,y+8,18,12);ctx.fillStyle='#16191d';ctx.fillRect(x+3,y+8,5,12);ctx.fillRect(x+32,y+8,5,12);ctx.fillRect(x+3,y+31,5,12);ctx.fillRect(x+32,y+31,5,12);ctx.fillStyle='#f8e9b0';ctx.fillRect(x+9,y+2,6,3);ctx.fillRect(x+25,y+2,6,3)}
+function paint(){ctx.fillStyle='#20272a';ctx.fillRect(0,0,560,400);ctx.fillStyle='#343c40';ctx.fillRect(65,0,430,400);ctx.fillStyle='#e7e7e7';ctx.fillRect(65,0,5,400);ctx.fillRect(490,0,5,400);ctx.fillStyle='#c4c8ca';for(let y=-30;y<430;y+=70){ctx.fillRect(207,y+(frame%70),5,35);ctx.fillRect(348,y+(frame%70),5,35)}drawCar(104+player*141,325,'#d82935');traffic.forEach(t=>drawCar(104+t.lane*141,t.y,'#d4d6d8'));if(!running){ctx.fillStyle='rgba(0,0,0,.48)';ctx.fillRect(70,0,420,400);ctx.fillStyle='white';ctx.textAlign='center';ctx.font='bold 24px Arial';ctx.fillText('ARMS RACE',280,180);ctx.font='14px Arial';ctx.fillText('PRESS START RACE',280,210)}}
+function end(){running=false;cancelAnimationFrame(raf);statusEl.textContent='Race over! Press Start Race to try again.';paint()}
+function tick(){if(!running)return;frame+=4;if((keys.ArrowLeft||keys.a||keys.A)&&player>0)player--;if((keys.ArrowRight||keys.d||keys.D)&&player<2)player++;keys.ArrowLeft=keys.ArrowRight=keys.a=keys.d=false;if(frame%48===0)traffic.push({lane:Math.floor(Math.random()*3),y:-55});traffic.forEach(t=>t.y+=4);traffic=traffic.filter(t=>t.y<430);for(const t of traffic){if(t.lane===player&&t.y>325&&t.y<373){end();return}}score++;scoreEl.textContent=score;paint();raf=requestAnimationFrame(tick)}
+function start(){cancelAnimationFrame(raf);player=1;traffic=[];score=0;frame=0;scoreEl.textContent='0';running=true;statusEl.textContent='Keep moving — avoid the traffic!';tick()}
+document.getElementById('start').onclick=start;
+document.getElementById('left').onpointerdown=()=>{if(running&&player>0)player--};
+document.getElementById('right').onpointerdown=()=>{if(running&&player<2)player++};
+document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true});
+paint();
+</script>
+</body></html>
