@@ -1,51 +1,274 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#08090b">
-<title>ARMS RACE — Racing Games</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARMS FIGHT</title>
 <style>
-:root{--bg:#08090b;--panel:#111317;--line:#292d34;--muted:#9ba2ad;--white:#f4f5f7;--red:#e12b36}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
-header{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 7%;border-bottom:1px solid #202329;background:#090a0c;position:sticky;top:0;z-index:2}
-.logo{font-size:22px;font-weight:900;letter-spacing:3px}.logo span{color:var(--red)}
-nav a{color:#c6cad1;text-decoration:none;margin-left:25px;font-size:13px}nav a:hover{color:white}
-.hero{min-height:390px;padding:78px 7%;display:flex;align-items:center;background:linear-gradient(90deg,rgba(8,9,11,.98),rgba(8,9,11,.74),rgba(8,9,11,.25)),url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1800&q=85') center/cover}
-.kicker{color:var(--red);font-size:12px;font-weight:bold;letter-spacing:3px}.hero h1{font-size:clamp(42px,7vw,76px);line-height:.98;margin:16px 0;letter-spacing:-3px}.hero p{max-width:490px;color:#c1c5cc;line-height:1.6}.btn{display:inline-block;margin-top:16px;background:var(--red);color:white;border:0;border-radius:3px;padding:14px 22px;font-weight:bold;letter-spacing:1px;text-decoration:none;cursor:pointer}
-main{padding:38px 7% 70px}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:18px}.section-head h2{font-size:22px;margin:0}.section-head span{font-size:12px;color:var(--muted)}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.card{background:var(--panel);border:1px solid var(--line);border-radius:7px;overflow:hidden}.card img{width:100%;height:145px;object-fit:cover;display:block;filter:saturate(.8)}.card-body{padding:16px}.card h3{margin:0 0 7px;font-size:16px}.card p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.tag{display:inline-block;color:#ff747b;font-size:10px;letter-spacing:1px;margin-bottom:9px}
-.game-wrap{margin-top:42px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px}.game-wrap h2{margin:0 0 8px}.game-wrap p{color:var(--muted);font-size:13px}.game-area{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:18px;align-items:start}canvas{width:100%;max-width:560px;aspect-ratio:7/5;background:#252a2d;border:1px solid #454b52;border-radius:5px;display:block}.controls{font-size:13px;color:#c2c7cf;line-height:1.7}.controls strong{color:white}.controls button{width:100%;padding:11px;margin-top:8px;background:#252a31;border:1px solid #414751;color:white;border-radius:4px;cursor:pointer}.score{font-size:24px;font-weight:bold;color:#fff;margin:8px 0}
-footer{border-top:1px solid #202329;padding:24px 7%;color:#7f8792;font-size:12px;display:flex;justify-content:space-between}
-@media(max-width:700px){header{padding:0 5%}nav a{margin-left:10px;font-size:11px}.hero{padding:65px 5%}main{padding:30px 5%}.game-area{grid-template-columns:1fr}.controls{max-width:560px}.section-head span{display:none}}
+*{box-sizing:border-box}
+body{margin:0;background:#071426;color:white;font-family:Arial;text-align:center}
+header{background:#102b50;padding:20px}
+h1{margin:0;color:#55aaff;letter-spacing:4px;font-size:32px}
+main{max-width:850px;margin:auto;padding:15px}
+.panel{background:#102440;padding:15px;border-radius:14px;margin:12px 0}
+.hud{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.info{width:42%;text-align:left}
+.info:last-child{text-align:right}
+.bar{height:16px;background:#394b60;border-radius:20px;overflow:hidden}
+.fill{height:100%;width:100%;transition:width .15s}
+.blue{background:#278aff}
+.red{background:#ff4b55}
+#timer{font-size:25px;font-weight:bold}
+canvas{width:100%;height:auto;background:#193657;border:3px solid #4389cc;border-radius:12px}
+#message{min-height:28px;color:#9bcaff;font-weight:bold;margin:12px}
+button{padding:14px;border:0;border-radius:10px;color:white;background:#1679e8;font-size:15px;font-weight:bold;margin:4px;cursor:pointer;touch-action:manipulation}
+button:active{transform:scale(.96)}
+#start,#restart{background:#168c60}
+#block{background:#7058c9}
+#dodge{background:#c77b22}
+.controls{display:flex;justify-content:center;flex-wrap:wrap}
+small{color:#a9bdd4;line-height:2}
 </style>
 </head>
 <body>
-<header><div class="logo">ARMS <span>RACE</span></div><nav><a href="#games">GAMES</a><a href="#play">PLAY NOW</a></nav></header>
-<section class="hero"><div><div class="kicker">THE HOME OF ONLINE RACING</div><h1>BUILT FOR<br>THE NEED FOR SPEED.</h1><p>Choose your race, hit the track, and chase your best time. Welcome to ARMS RACE.</p><a class="btn" href="#play">START RACING&nbsp; ↗</a></div></section>
+<header>
+<h1>ARMS FIGHT</h1>
+<p>ENTER THE RING. FIGHT FOR THE TITLE.</p>
+</header>
 <main>
-<section id="games"><div class="section-head"><h2>FEATURED RACING</h2><span>YOUR NEXT RACE STARTS HERE</span></div>
-<div class="cards">
-<article class="card"><img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=900&q=80" alt="Sports car"><div class="card-body"><span class="tag">COMING SOON</span><h3>Street Sprint</h3><p>Race through the city and chase the finish line.</p></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80" alt="Racing car" onerror="this.src='https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=80'"><div class="card-body"><span class="tag">COMING SOON</span><h3>Track Legends</h3><p>Take on sharp turns and beat your lap record.</p></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=900&q=80" alt="Performance car"><div class="card-body"><span class="tag">PLAYABLE DEMO BELOW</span><h3>Traffic Racer</h3><p>Dodge the traffic and see how long you can last.</p></div></article>
-</div></section>
-<section class="game-wrap" id="play"><h2>TRAFFIC RACER — MINI DEMO</h2><p>Use ← and → or A and D to move. Avoid the other cars and build your score.</p>
-<div class="game-area"><canvas id="game" width="560" height="400" aria-label="Traffic racing mini game"></canvas><aside class="controls"><div>YOUR SCORE</div><div class="score" id="score">0</div><div id="status">Press Start Race to begin.</div><button id="start">START RACE</button><button id="left">← LEFT</button><button id="right">RIGHT →</button><p><strong>Keyboard:</strong><br>← / → or A / D<br><strong>Mobile:</strong><br>Use the direction buttons.</p></aside></div></section>
+<div class="panel hud">
+<div class="info"><b>YOU 🔵</b><div class="bar"><div id="ph" class="fill blue"></div></div></div>
+<div id="timer">60</div>
+<div class="info"><b>CPU 🔴</b><div class="bar"><div id="eh" class="fill red"></div></div></div>
+</div>
+
+<canvas id="game" width="800" height="420"></canvas>
+<div id="message">Press START to fight!</div>
+
+<div class="panel">
+<button id="start">START FIGHT</button>
+<div class="controls">
+<button id="left">⬅ LEFT</button>
+<button id="right">RIGHT ➡</button>
+<button id="punch">👊 PUNCH</button>
+<button id="block">🛡 BLOCK</button>
+<button id="dodge">💨 DODGE</button>
+</div>
+<button id="restart">RESTART</button>
+</div>
+
+<small>
+PC: A / D = Move | SPACE = Punch | B = Block | SHIFT = Dodge | R = Restart
+<br>Phone: Use the buttons above.
+</small>
 </main>
-<footer><span>© 2026 ARMS RACE</span><span>RACE YOUR WAY.</span></footer>
+
 <script>
-const c=document.getElementById('game'),ctx=c.getContext('2d'),scoreEl=document.getElementById('score'),statusEl=document.getElementById('status');
-let player=2,traffic=[],score=0,running=false,frame=0,raf=0,keys={};
-function drawCar(x,y,color){ctx.fillStyle=color;ctx.fillRect(x+7,y,26,48);ctx.fillStyle='#b8d7e8';ctx.fillRect(x+11,y+8,18,12);ctx.fillStyle='#16191d';ctx.fillRect(x+3,y+8,5,12);ctx.fillRect(x+32,y+8,5,12);ctx.fillRect(x+3,y+31,5,12);ctx.fillRect(x+32,y+31,5,12);ctx.fillStyle='#f8e9b0';ctx.fillRect(x+9,y+2,6,3);ctx.fillRect(x+25,y+2,6,3)}
-function paint(){ctx.fillStyle='#20272a';ctx.fillRect(0,0,560,400);ctx.fillStyle='#343c40';ctx.fillRect(65,0,430,400);ctx.fillStyle='#e7e7e7';ctx.fillRect(65,0,5,400);ctx.fillRect(490,0,5,400);ctx.fillStyle='#c4c8ca';for(let y=-30;y<430;y+=70){ctx.fillRect(207,y+(frame%70),5,35);ctx.fillRect(348,y+(frame%70),5,35)}drawCar(104+player*141,325,'#d82935');traffic.forEach(t=>drawCar(104+t.lane*141,t.y,'#d4d6d8'));if(!running){ctx.fillStyle='rgba(0,0,0,.48)';ctx.fillRect(70,0,420,400);ctx.fillStyle='white';ctx.textAlign='center';ctx.font='bold 24px Arial';ctx.fillText('ARMS RACE',280,180);ctx.font='14px Arial';ctx.fillText('PRESS START RACE',280,210)}}
-function end(){running=false;cancelAnimationFrame(raf);statusEl.textContent='Race over! Press Start Race to try again.';paint()}
-function tick(){if(!running)return;frame+=4;if((keys.ArrowLeft||keys.a||keys.A)&&player>0)player--;if((keys.ArrowRight||keys.d||keys.D)&&player<2)player++;keys.ArrowLeft=keys.ArrowRight=keys.a=keys.d=false;if(frame%48===0)traffic.push({lane:Math.floor(Math.random()*3),y:-55});traffic.forEach(t=>t.y+=4);traffic=traffic.filter(t=>t.y<430);for(const t of traffic){if(t.lane===player&&t.y>325&&t.y<373){end();return}}score++;scoreEl.textContent=score;paint();raf=requestAnimationFrame(tick)}
-function start(){cancelAnimationFrame(raf);player=1;traffic=[];score=0;frame=0;scoreEl.textContent='0';running=true;statusEl.textContent='Keep moving — avoid the traffic!';tick()}
-document.getElementById('start').onclick=start;
-document.getElementById('left').onpointerdown=()=>{if(running&&player>0)player--};
-document.getElementById('right').onpointerdown=()=>{if(running&&player<2)player++};
-document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.key]=true});
-paint();
+const canvas=document.getElementById("game");
+const c=canvas.getContext("2d");
+const ph=document.getElementById("ph");
+const eh=document.getElementById("eh");
+const timer=document.getElementById("timer");
+const msg=document.getElementById("message");
+
+let p,e,seconds,running,ended,last,pc,ec,pa,ea,pat,eat;
+let keys={};
+
+function reset(){
+ p={x:260,hp:100};
+ e={x:540,hp:100};
+ seconds=60;running=false;ended=false;
+ pc=0;ec=0;pa="";ea="";pat=0;eat=0;
+ keys={};
+ update();draw();
+ msg.textContent="Press START to fight!";
+}
+
+function update(){
+ ph.style.width=Math.max(0,p.hp)+"%";
+ eh.style.width=Math.max(0,e.hp)+"%";
+ timer.textContent=Math.ceil(seconds);
+}
+
+function drawFighter(x,y,color,action,face){
+ c.save();
+ c.translate(x,y);c.scale(face,1);
+ c.strokeStyle=color;c.lineWidth=17;c.lineCap="round";
+ c.beginPath();
+ c.moveTo(-10,38);c.lineTo(-23,75);
+ c.moveTo(10,38);c.lineTo(22,75);c.stroke();
+
+ c.fillStyle=color;c.fillRect(-24,-8,48,52);
+ c.fillStyle="#e5b58b";
+ c.beginPath();c.arc(0,-34,23,0,Math.PI*2);c.fill();
+ c.fillStyle="#25232b";
+ c.beginPath();c.arc(0,-42,23,Math.PI,Math.PI*2);c.fill();
+ c.fillStyle="#111";c.beginPath();c.arc(8,-35,2.5,0,Math.PI*2);c.fill();
+
+ c.strokeStyle="#e5b58b";c.lineWidth=13;
+ c.beginPath();
+ if(action==="punch"){
+ c.moveTo(17,2);c.lineTo(52,-9);
+ c.moveTo(-17,2);c.lineTo(-28,20);
+ }else if(action==="block"){
+ c.moveTo(17,2);c.lineTo(22,-22);
+ c.moveTo(-17,2);c.lineTo(-22,-22);
+ }else{
+ c.moveTo(17,2);c.lineTo(37,16);
+ c.moveTo(-17,2);c.lineTo(-37,16);
+ }
+ c.stroke();
+ c.fillStyle="#fff";
+ if(action==="punch"){
+ c.beginPath();c.arc(55,-9,13,0,Math.PI*2);c.fill();
+ }else if(action==="block"){
+ c.beginPath();c.arc(22,-25,13,0,Math.PI*2);
+ c.arc(-22,-25,13,0,Math.PI*2);c.fill();
+ }else{
+ c.beginPath();c.arc(40,17,13,0,Math.PI*2);
+ c.arc(-40,17,13,0,Math.PI*2);c.fill();
+ }
+ c.restore();
+}
+
+function draw(){
+ c.clearRect(0,0,800,420);
+ c.fillStyle="#193657";c.fillRect(0,0,800,420);
+ c.fillStyle="#d7e6f5";c.font="bold 22px Arial";
+ c.fillText("ARMS FIGHT ARENA",280,35);
+ for(let i=0;i<3;i++){
+ c.strokeStyle=["#f2f5fa","#e34d58","#f2f5fa"][i];
+ c.lineWidth=5;c.beginPath();
+ c.moveTo(30,220+i*45);c.lineTo(770,220+i*45);c.stroke();
+ }
+ c.fillStyle="#314c6b";c.fillRect(0,355,800,65);
+ drawFighter(p.x,285,"#218cff",pa,1);
+ drawFighter(e.x,285,"#ed4654",ea,-1);
+}
+
+function finish(text){
+ running=false;ended=true;
+ msg.textContent=text;draw();
+}
+
+function action(type){
+ if(!running||ended||pc>0)return;
+ pa=type;pat=.35;
+ if(type==="punch"){
+ pc=.5;
+ if(Math.abs(p.x-e.x)<220){
+ if(ea==="block"){e.hp-=3;msg.textContent="CPU BLOCKED!";}
+ else if(ea==="dodge"){msg.textContent="CPU DODGED!";}
+ else{e.hp-=10;msg.textContent="NICE PUNCH!";}
+ }else msg.textContent="MOVE CLOSER!";
+ }
+ if(type==="block"){
+ pc=.25;msg.textContent="GUARD UP!";
+ }
+ if(type==="dodge"){
+ pc=.6;
+ p.x=Math.max(100,Math.min(700,p.x-55));
+ msg.textContent="NICE DODGE!";
+ }
+ update();draw();
+}
+
+function enemyAttack(){
+ if(ec>0)return;
+ let distance=Math.abs(e.x-p.x);
+ let r=Math.random();
+ if(r<.3){
+ ea="block";eat=.5;ec=.9;
+ }else if(r<.5){
+ ea="dodge";eat=.3;ec=1;
+ e.x=Math.min(680,e.x+35);
+ }else if(distance<220){
+ ea="punch";eat=.3;ec=1;
+ if(pa==="block"){
+ p.hp-=2;msg.textContent="YOU BLOCKED!";
+ }else if(pa==="dodge"){
+ msg.textContent="YOU DODGED!";
+ }else{
+ p.hp-=8;msg.textContent="CPU PUNCHED!";
+ }
+ }else{
+ e.x-=20;ec=.4;
+ }
+}
+
+function loop(now){
+ if(!running)return;
+ let dt=Math.min((now-last)/1000,.05);
+ last=now;
+ seconds-=dt;
+ pc=Math.max(0,pc-dt);ec=Math.max(0,ec-dt);
+ pat=Math.max(0,pat-dt);eat=Math.max(0,eat-dt);
+
+ if(pat===0)pa="";
+ if(eat===0)ea="";
+
+ // PC movement
+ if(keys.a)p.x-=230*dt;
+ if(keys.d)p.x+=230*dt;
+ p.x=Math.max(90,Math.min(710,p.x));
+
+ if(ec===0)enemyAttack();
+
+ update();draw();
+
+ if(e.hp<=0){finish("🏆 YOU WIN! CHAMPION!");return;}
+ if(p.hp<=0){finish("CPU WINS! TRY AGAIN!");return;}
+ if(seconds<=0){
+ seconds=0;update();
+ if(p.hp>e.hp)finish("🏆 YOU WIN ON POINTS!");
+ else if(e.hp>p.hp)finish("CPU WINS ON POINTS!");
+ else finish("TIME UP! DRAW!");
+ return;
+ }
+ requestAnimationFrame(loop);
+}
+
+function start(){
+ if(running)return;
+ if(ended)reset();
+ running=true;last=performance.now();
+ msg.textContent="FIGHT!";
+ requestAnimationFrame(loop);
+}
+
+document.getElementById("start").onclick=start;
+document.getElementById("restart").onclick=reset;
+document.getElementById("punch").onclick=()=>action("punch");
+document.getElementById("block").onclick=()=>action("block");
+document.getElementById("dodge").onclick=()=>action("dodge");
+
+document.getElementById("left").onpointerdown=()=>{
+ if(running)p.x=Math.max(90,p.x-35);
+ draw();
+};
+document.getElementById("right").onpointerdown=()=>{
+ if(running)p.x=Math.min(710,p.x+35);
+ draw();
+};
+
+document.addEventListener("keydown",ev=>{
+ let k=ev.key.toLowerCase();
+ if(k===" "){ev.preventDefault();if(!ev.repeat)action("punch");}
+ if(k==="a"||k==="d")keys[k]=true;
+ if(!ev.repeat&&k==="b")action("block");
+ if(!ev.repeat&&k==="shift")action("dodge");
+ if(!ev.repeat&&k==="r")reset();
+});
+
+document.addEventListener("keyup",ev=>{
+ let k=ev.key.toLowerCase();
+ if(k==="a"||k==="d")keys[k]=false;
+});
+
+window.addEventListener("blur",()=>keys={});
+
+reset();
 </script>
-</body></html>
+</body>
+</html>
